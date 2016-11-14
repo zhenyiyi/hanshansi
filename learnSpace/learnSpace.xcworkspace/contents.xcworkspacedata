@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:MulticastDelegate/MulticastDelegate.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Gesture/Gesture.xcodeproj">
    </FileRef>
    <FileRef
