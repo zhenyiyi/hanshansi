@@ -13,6 +13,7 @@
 		5148743A1DDB40A5006A1CF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 514874381DDB40A5006A1CF2 /* Main.storyboard */; };
 		5148743C1DDB40A5006A1CF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5148743B1DDB40A5006A1CF2 /* Assets.xcassets */; };
 		5148743F1DDB40A5006A1CF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5148743D1DDB40A5006A1CF2 /* LaunchScreen.storyboard */; };
+		5148744A1DDB40DD006A1CF2 /* XMPPCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 514874481DDB40DD006A1CF2 /* XMPPCoreDataStorage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,9 @@
 		5148743B1DDB40A5006A1CF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5148743E1DDB40A5006A1CF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		514874401DDB40A5006A1CF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		514874471DDB40DD006A1CF2 /* XMPPCoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCoreDataStorage.h; sourceTree = "<group>"; };
+		514874481DDB40DD006A1CF2 /* XMPPCoreDataStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPCoreDataStorage.m; sourceTree = "<group>"; };
+		514874491DDB40DD006A1CF2 /* XMPPCoreDataStorageProtected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCoreDataStorageProtected.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 		5148742E1DDB40A5006A1CF2 /* CoreDataStorage */ = {
 			isa = PBXGroup;
 			children = (
+				514874461DDB40DD006A1CF2 /* CoreDataStorage */,
 				514874321DDB40A5006A1CF2 /* AppDelegate.h */,
 				514874331DDB40A5006A1CF2 /* AppDelegate.m */,
 				514874351DDB40A5006A1CF2 /* ViewController.h */,
@@ -77,6 +82,16 @@
 				514874301DDB40A5006A1CF2 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		514874461DDB40DD006A1CF2 /* CoreDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				514874471DDB40DD006A1CF2 /* XMPPCoreDataStorage.h */,
+				514874481DDB40DD006A1CF2 /* XMPPCoreDataStorage.m */,
+				514874491DDB40DD006A1CF2 /* XMPPCoreDataStorageProtected.h */,
+			);
+			path = CoreDataStorage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				514874371DDB40A5006A1CF2 /* ViewController.m in Sources */,
+				5148744A1DDB40DD006A1CF2 /* XMPPCoreDataStorage.m in Sources */,
 				514874341DDB40A5006A1CF2 /* AppDelegate.m in Sources */,
 				514874311DDB40A5006A1CF2 /* main.m in Sources */,
 			);
