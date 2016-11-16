@@ -472,6 +472,9 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 #pragma mark Core Data Setup
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ @return 本地存储的路径
+ */
 - (NSString *)persistentStoreDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
@@ -495,6 +498,9 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
     return persistentStoreDirectory;
 }
 
+/**
+ @return Core Data的模型文件，有点像SQLite的.sqlite文件(个人理解：表示一个.xcdatamodeld文件)
+ */
 - (NSManagedObjectModel *)managedObjectModel
 {
 	// This is a public method.
@@ -538,7 +544,7 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
         {
             if(autoAllowExternalBinaryDataStorage)
             {
-                NSArray *entities = [managedObjectModel entities];
+                NSArray<NSEntityDescription *> *entities = [managedObjectModel entities];
                 
                 for(NSEntityDescription *entity in entities)
                 {
@@ -560,7 +566,9 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 		
 		result = managedObjectModel;
 	}};
-	
+	/*
+     * 在指定的队列 调用这个block。
+     */
 	if (dispatch_get_specific(storageQueueTag))
 		block();
 	else
@@ -569,6 +577,14 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 	return result;
 }
 
+
+/**
+ 持久化存储库，CoreData的存储类型（比如SQLite数据库就是其中一种）。
+ 用来将对象管理部分和持久化部分捆绑在一起，负责相互之间的交流（中介一样）
+ 用来设置CoreData存储类型和存储路径
+
+ @return
+ */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
 	// This is a public method.
@@ -583,7 +599,7 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 			result = persistentStoreCoordinator;
 			return;
 		}
-		
+		// 1.拿到模型。
 		NSManagedObjectModel *mom = [self managedObjectModel];
 		if (mom == nil)
 		{
@@ -591,9 +607,10 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 		}
 		
 		XMPPLogVerbose(@"%@: Creating persistentStoreCoordinator", [self class]);
-		
+		// 2.创建数据库存储协调器
 		persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
 		
+        // 3.如果数据库名称存在，则存到本地硬盘，否则存到内存。
 		if (databaseFileName)
 		{
 			// SQLite persistent store
@@ -603,7 +620,7 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 			if (storePath)
 			{
 				// If storePath is nil, then NSURL will throw an exception
-                
+                // 3.1 如果设置自动移除，则删掉以前的，在创建新的。
                 if(autoRemovePreviousDatabaseFile)
                 {
                     if ([[NSFileManager defaultManager] fileExistsAtPath:storePath])
@@ -611,7 +628,7 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
                         [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
                     }
                 }
-				
+				// 3.2 将要创建的回调。
 				[self willCreatePersistentStoreWithPath:storePath options:storeOptions];
 				
 				NSError *error = nil;
@@ -627,6 +644,7 @@ static NSMutableSet *databaseFileNames;///< 数据库文件名称集合。
 				
 				if (!didAddPersistentStore)
 				{
+                    // 3.3 不能够添加的回调。
 					[self didNotAddPersistentStoreWithPath:storePath options:storeOptions error:error];
 				}
 			}
